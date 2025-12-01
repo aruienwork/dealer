@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>愛瑞恩-經銷商資料登錄</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f4f8 0%, #e8eef5 50%, #ffffff 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(21, 101, 192, 0.15);
+            overflow: hidden;
+            border: 2px solid rgba(21, 101, 192, 0.08);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%);
+            padding: 35px 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: -10%;
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            right: -8%;
+            width: 180px;
+            height: 180px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header img {
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 20px;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            font-size: 15px;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .form-content {
+            padding: 45px 40px;
+        }
+
+        .welcome-text {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid rgba(21, 101, 192, 0.15);
+        }
+
+        .welcome-text h2 {
+            color: #0D47A1;
+            font-size: 22px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .welcome-text p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            color: #1565C0;
+            font-size: 18px;
+            font-weight: 700;
+            margin: 30px 0 20px 0;
+            padding-left: 15px;
+            border-left: 4px solid #1565C0;
+        }
+
+        .section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #0D47A1;
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group label::before {
+            content: '▸';
+            color: #1565C0;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        .form-group label .required {
+            color: #D32F2F;
+            margin-left: 5px;
+            font-weight: 700;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"] {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #BBDEFB;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-family: 'Microsoft JhengHei', 'Arial', sans-serif;
+            background: #FAFCFE;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1565C0;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(21, 101, 192, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .form-group input::placeholder {
+            color: #B0BEC5;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            margin-top: 35px;
+            box-shadow: 0 6px 20px rgba(21, 101, 192, 0.3);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(21, 101, 192, 0.4);
+            background: linear-gradient(135deg, #0D47A1 0%, #01579B 100%);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:disabled {
+            background: linear-gradient(135deg, #BDBDBD 0%, #9E9E9E 100%);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* 預覽視窗樣式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            overflow-y: auto;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 650px;
+            margin: 50px auto;
+            border-radius: 20px;
+            padding: 0;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            line-height: 1;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .preview-section {
+            margin-bottom: 25px;
+        }
+
+        .preview-section h4 {
+            color: #0D47A1;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #BBDEFB;
+        }
+
+        .preview-item {
+            padding: 15px 18px;
+            margin-bottom: 12px;
+            border-left: 4px solid #1565C0;
+            background: linear-gradient(90deg, #F5F9FC 0%, #FFFFFF 100%);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .preview-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(21, 101, 192, 0.1);
+        }
+
+        .preview-label {
+            font-weight: 600;
+            color: #0D47A1;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .preview-value {
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            padding: 20px 30px 30px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .confirm-btn {
+            background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(21, 101, 192, 0.3);
+        }
+
+        .confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(21, 101, 192, 0.4);
+        }
+
+        .cancel-btn {
+            background: linear-gradient(135deg, #ECEFF1 0%, #CFD8DC 100%);
+            color: #455A64;
+        }
+
+        .cancel-btn:hover {
+            background: linear-gradient(135deg, #CFD8DC 0%, #B0BEC5 100%);
+        }
+
+        /* 成功訊息樣式 */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 70px 40px;
+            animation: successFadeIn 0.5s ease;
+        }
+
+        @keyframes successFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .success-message .icon-wrapper {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(76, 175, 80, 0.3);
+            animation: iconPop 0.6s ease 0.2s both;
+        }
+
+        @keyframes iconPop {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .success-message .icon {
+            font-size: 60px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .success-message h2 {
+            color: #0D47A1;
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .success-message p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        .success-message .back-btn {
+            display: inline-block;
+            padding: 14px 35px;
+            background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(21, 101, 192, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .success-message .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(21, 101, 192, 0.4);
+        }
+
+        .privacy-note {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #E3F2FD;
+            color: #78909C;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+            }
+
+            .form-content {
+                padding: 35px 25px;
+            }
+
+            .header h1 {
+                font-size: 26px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .welcome-text h2 {
+                font-size: 20px;
+            }
+
+            .modal-content {
+                margin: 20px;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .success-message {
+                padding: 50px 25px;
+            }
+
+            .success-message h2 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <img src="https://www.aruien.com/images/share/logo.png" alt="愛瑞恩 Logo">
+                <h1>經銷商資料登錄</h1>
+                <p>建立合作夥伴關係，共創美好未來</p>
+            </div>
+        </div>
+
+        <div class="form-content" id="formContent">
+            <div class="welcome-text">
+                <h2>歡迎成為愛瑞恩合作夥伴</h2>
+            </div>
+
+            <form id="dealerForm">
+                <!-- 隱藏欄位 -->
+                <input type="hidden" name="LineID" id="LineID">
+                <input type="hidden" name="表單功能" value="經銷商資料">
+
+                <!-- 公司資料 -->
+                <div class="section-title">公司資料</div>
+
+                <div class="form-group">
+                    <label for="dealerName">經銷商名稱 <span class="required">*</span></label>
+                    <input type="text" id="dealerName" name="經銷商名稱" placeholder="請輸入公司名稱" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="taxId">經銷商統編 <span class="required">*</span></label>
+                    <input type="text" 
+                           id="taxId" 
+                           name="經銷商統編" 
+                           placeholder="請輸入8位數統一編號" 
+                           required 
+                           pattern="[0-9]{8}" 
+                           maxlength="8"
+                           title="請輸入8位數字的統一編號">
+                </div>
+
+                <!-- 聯絡人資料 -->
+                <div class="section-title">聯絡人資料</div>
+
+                <div class="form-group">
+                    <label for="contactName">聯絡人姓名 <span class="required">*</span></label>
+                    <input type="text" id="contactName" name="聯絡人姓名" placeholder="請輸入聯絡人姓名" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactPhone">聯絡人電話 <span class="required">*</span></label>
+                    <input type="tel" 
+                           id="contactPhone" 
+                           name="聯絡人電話" 
+                           placeholder="例如：0912-345-678" 
+                           required 
+                           pattern="[0-9\-]+" 
+                           title="請輸入數字或-符號">
+                </div>
+
+                <div class="form-group">
+                    <label for="contactEmail">聯絡人Email <span class="required">*</span></label>
+                    <input type="email" 
+                           id="contactEmail" 
+                           name="聯絡人Email" 
+                           placeholder="example@company.com" 
+                           required 
+                           pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" 
+                           title="請輸入有效的Email格式">
+                </div>
+
+                <button type="submit" class="submit-btn">提交經銷商資料</button>
+
+                <div class="privacy-note">
+                    <p>🔒 您的資料將受到嚴格保密，僅用於合作事宜聯繫使用</p>
+                </div>
+            </form>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <div class="icon-wrapper">
+                <div class="icon">✓</div>
+            </div>
+            <h2>資料提交成功！</h2>
+            <p>感謝您申請成為愛瑞恩經銷商<br>我們的業務團隊將盡快與您聯繫</p>
+            <a href="#" class="back-btn" onclick="location.reload()">返回首頁</a>
+        </div>
+    </div>
+
+    <!-- 預覽視窗 -->
+    <div class="modal" id="previewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>確認您的資料</h2>
+                <button class="close-modal" onclick="closePreview()">&times;</button>
+            </div>
+            <div class="modal-body" id="previewContent"></div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel-btn" onclick="closePreview()">返回修改</button>
+                <button class="modal-btn confirm-btn" onclick="submitForm()">確認送出</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 從URL讀取參數並預填表單
+        function prefillFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            const fieldMapping = {
+                'LineID': 'LineID',
+                'dealerName': 'dealerName',
+                'taxId': 'taxId',
+                'contactName': 'contactName',
+                'contactPhone': 'contactPhone',
+                'contactEmail': 'contactEmail'
+            };
+
+            for (const [param, fieldId] of Object.entries(fieldMapping)) {
+                const value = urlParams.get(param);
+                if (value) {
+                    const field = document.getElementById(fieldId);
+                    if (field) {
+                        field.value = decodeURIComponent(value);
+                    }
+                }
+            }
+        }
+
+        // 統編即時驗證
+        document.getElementById('taxId').addEventListener('input', function(e) {
+            const value = e.target.value;
+            const validPattern = /^[0-9]*$/;
+            
+            if (!validPattern.test(value)) {
+                e.target.value = value.replace(/[^0-9]/g, '');
+                alert('統一編號只能包含數字');
+            }
+            
+            if (value.length > 8) {
+                e.target.value = value.substring(0, 8);
+            }
+        });
+
+        // 電話號碼即時驗證
+        document.getElementById('contactPhone').addEventListener('input', function(e) {
+            const value = e.target.value;
+            const validPattern = /^[0-9\-]*$/;
+            
+            if (!validPattern.test(value)) {
+                e.target.value = value.replace(/[^0-9\-]/g, '');
+                alert('聯絡電話只能包含數字和-符號');
+            }
+        });
+
+        // Email即時驗證
+        document.getElementById('contactEmail').addEventListener('blur', function(e) {
+            const value = e.target.value;
+            const emailPattern = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+            
+            if (value && !emailPattern.test(value)) {
+                alert('請輸入有效的Email格式，例如：example@company.com');
+            }
+        });
+
+        // 表單提交
+        document.getElementById('dealerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 最終驗證
+            const taxId = document.getElementById('taxId').value;
+            const phone = document.getElementById('contactPhone').value;
+            const email = document.getElementById('contactEmail').value;
+            
+            const taxIdPattern = /^[0-9]{8}$/;
+            const phonePattern = /^[0-9\-]+$/;
+            const emailPattern = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+            
+            if (!taxIdPattern.test(taxId)) {
+                alert('統一編號必須是8位數字');
+                return;
+            }
+            
+            if (!phonePattern.test(phone)) {
+                alert('聯絡電話格式錯誤，只能包含數字和-符號');
+                return;
+            }
+            
+            if (!emailPattern.test(email)) {
+                alert('Email格式錯誤，請輸入有效的Email地址');
+                return;
+            }
+            
+            showPreview();
+        });
+
+        // 顯示預覽
+        function showPreview() {
+            const form = document.getElementById('dealerForm');
+            const formData = new FormData(form);
+            const previewContent = document.getElementById('previewContent');
+            
+            let html = '';
+            
+            // 公司資料
+            html += '<div class="preview-section"><h4>公司資料</h4>';
+            const companyFields = [
+                ['經銷商名稱'],
+                ['經銷商統編']
+            ];
+            
+            companyFields.forEach(([field]) => {
+                const value = formData.get(field);
+                if (value) {
+                    html += `
+                        <div class="preview-item">
+                            <div class="preview-label">${field}</div>
+                            <div class="preview-value">${value}</div>
+                        </div>
+                    `;
+                }
+            });
+            html += '</div>';
+            
+            // 聯絡人資料
+            html += '<div class="preview-section"><h4>聯絡人資料</h4>';
+            const contactFields = [
+                ['聯絡人姓名'],
+                ['聯絡人電話'],
+                ['聯絡人Email']
+            ];
+            
+            contactFields.forEach(([field]) => {
+                const value = formData.get(field);
+                if (value) {
+                    html += `
+                        <div class="preview-item">
+                            <div class="preview-label">${field}</div>
+                            <div class="preview-value">${value}</div>
+                        </div>
+                    `;
+                }
+            });
+            html += '</div>';
+
+            previewContent.innerHTML = html;
+            document.getElementById('previewModal').style.display = 'block';
+        }
+
+        // 關閉預覽
+        function closePreview() {
+            document.getElementById('previewModal').style.display = 'none';
+        }
+
+        // 實際提交表單
+        async function submitForm() {
+            const form = document.getElementById('dealerForm');
+            const formData = new FormData(form);
+            
+            // 轉換為JSON格式
+            const jsonData = {};
+            
+            for (let [key, value] of formData.entries()) {
+                jsonData[key] = value;
+            }
+
+            try {
+                const response = await fetch('https://hook.us2.make.com/5tdymfkp9kwgg7dtcnskxgrij1d1xeif', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(jsonData)
+                });
+
+                if (response.ok) {
+                    closePreview();
+                    document.getElementById('formContent').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                } else {
+                    throw new Error('提交失敗');
+                }
+            } catch (error) {
+                alert('提交失敗，請稍後再試：' + error.message);
+            }
+        }
+
+        // 頁面載入時執行
+        window.onload = function() {
+            prefillFromURL();
+        };
+
+        // 點擊modal外部關閉
+        window.onclick = function(event) {
+            const modal = document.getElementById('previewModal');
+            if (event.target === modal) {
+                closePreview();
+            }
+        };
+    </script>
+</body>
+</html>
